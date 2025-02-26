@@ -21,7 +21,7 @@
         <h1>Cảm ơn bạn!</h1>
         <p>Số điện thoại của bạn: <span id="display-phone"></span></p>
         <p>Nhấn nút dưới đây để tải tài liệu!</p>
-        <a href="document.pdf" download>Tải Tài Liệu</a>
+        <a href="https://drive.google.com/uc?export=download&id=FILE_ID" download>Tải Tài Liệu</a>
         <button onclick="exportToExcel()" class="export-btn">Xuất Excel</button>
     </div>
 
@@ -35,17 +35,13 @@
                 return;
             }
 
-            // Thêm số điện thoại vào danh sách
             if (!phoneNumbers.includes(phone)) {
                 phoneNumbers.push(phone);
                 localStorage.setItem("phoneNumbers", JSON.stringify(phoneNumbers));
             }
 
-            // Ẩn form nhập và hiện phần tải tài liệu
             document.getElementById("form-section").style.display = "none";
             document.getElementById("download-section").style.display = "block";
-
-            // Hiển thị số điện thoại
             document.getElementById("display-phone").textContent = phone;
         }
 
@@ -55,17 +51,13 @@
                 return;
             }
 
-            // Tạo dữ liệu cho Excel
             const data = phoneNumbers.map((phone, index) => [index + 1, phone]);
             const ws = XLSX.utils.aoa_to_sheet([["STT", "Số Điện Thoại"], ...data]);
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "DanhSach");
-
-            // Xuất file Excel
             XLSX.writeFile(wb, "DanhSachSoDienThoai.xlsx");
         }
 
-        // Kiểm tra nếu đã có số điện thoại từ trước
         window.onload = function() {
             const lastPhone = localStorage.getItem("lastPhone");
             if (lastPhone) {
@@ -75,7 +67,6 @@
             }
         };
 
-        // Lưu số cuối cùng để hiển thị khi tải lại trang
         document.addEventListener("click", function(e) {
             if (e.target.tagName === "BUTTON" && e.target.textContent === "Gửi") {
                 const phone = document.getElementById("phone").value.trim();
