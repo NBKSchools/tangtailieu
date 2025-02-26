@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tặng Tài Liệu</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container" id="form-section">
+        <h1>Nhập Số Điện Thoại</h1>
+        <p>Để nhận tài liệu, vui lòng nhập số điện thoại của bạn!</p>
+        <input type="text" id="phone" placeholder="Số điện thoại" required>
+        <button onclick="submitPhone()">Gửi</button>
+    </div>
+
+    <div class="container" id="download-section" style="display: none;">
+        <h1>Cảm ơn bạn!</h1>
+        <p>Số điện thoại của bạn: <span id="display-phone"></span></p>
+        <p>Nhấn nút dưới đây để tải tài liệu!</p>
+        <a href="document.pdf" download>Tải Tài Liệu</a>
+    </div>
+
+    <script>
+        function submitPhone() {
+            const phone = document.getElementById("phone").value.trim();
+            if (phone === "") {
+                alert("Vui lòng nhập số điện thoại!");
+                return;
+            }
+
+            // Lưu số điện thoại vào localStorage
+            localStorage.setItem("phoneNumber", phone);
+
+            // Ẩn form nhập và hiện phần tải tài liệu
+            document.getElementById("form-section").style.display = "none";
+            document.getElementById("download-section").style.display = "block";
+
+            // Hiển thị số điện thoại
+            document.getElementById("display-phone").textContent = phone;
+        }
+
+        // Kiểm tra nếu đã có số điện thoại từ trước
+        window.onload = function() {
+            const savedPhone = localStorage.getItem("phoneNumber");
+            if (savedPhone) {
+                document.getElementById("form-section").style.display = "none";
+                document.getElementById("download-section").style.display = "block";
+                document.getElementById("display-phone").textContent = savedPhone;
+            }
+        };
+    </script>
+</body>
+</html>
